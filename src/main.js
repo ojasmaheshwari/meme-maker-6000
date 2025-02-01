@@ -1,6 +1,6 @@
 import Fuse from "fuse.js";
 import {Canvas} from "fabric";
-import {memeSearchBar, memeSearchSubmit, memeContainer, memeCanvasElem, addLabelButton, downloadButton, colorPickerElem, boxColorPickerElem, addRectangleButton, copyMemeButton, fontSizeSliderElem, memeUploadOverlayDiv, memeUploadButton, memeUploadOverlayCloseButton, uploadDragSectionDiv, memeImageUpload} from "./DOMElements";
+import {memeSearchBar, memeSearchSubmit, memeContainer, memeCanvasElem, addLabelButton, downloadButton, colorPickerElem, boxColorPickerElem, addRectangleButton, copyMemeButton, fontSizeSliderElem, memeUploadOverlayDiv, memeUploadButton, memeUploadOverlayCloseButton, uploadDragSectionDiv, memeImageUpload, editLabelButton} from "./DOMElements";
 import g, {textSettings} from "./Globals";
 import {loadMemes} from "./MemesDatasetLoader";
 import MemeQueryManager from "./MemeQueryManager";
@@ -76,6 +76,10 @@ async function main() {
 		memeUploadOverlayDiv.classList.remove('flex');
 		memeUploadOverlayDiv.classList.add('hidden');
 		g.uploadFormOpen = false;
+	});
+
+	editLabelButton.addEventListener("click", () => {
+		g.canvas.getActiveObject().enterEditing();
 	});
 
 	ManageUploads();

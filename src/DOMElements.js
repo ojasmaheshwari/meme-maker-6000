@@ -14,3 +14,4 @@ export const memeUploadOverlayDiv = document.querySelector('.upload-overlay');
 export const memeUploadOverlayCloseButton = document.querySelector('#close-upload-overlay');
 export const uploadDragSectionDiv = document.querySelector('.drag-section');
 export const memeImageUpload = document.querySelector('#meme-image-upload');
+export const editLabelButton = document.querySelector('#edit-label-button');

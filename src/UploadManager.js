@@ -10,9 +10,9 @@ function loadFileIntoCanvas() {
 		return;
 	}
 
-	const allowedTypes = ["image/png", "image/jpg", "image/jpeg"];
+	const allowedTypes = ["image/png", "image/jpg", "image/jpeg", "image/gif", "image/avif", "image/webp"];
 	if (!allowedTypes.includes(file.type)) {
-		console.error("Invalid file type");
+		console.error("Invalid file type", file.type);
 		return;
 	}
 
@@ -23,10 +23,12 @@ function loadFileIntoCanvas() {
 		const data = e.target.result;
 		const image = new Image();
 		image.src = data;
-		renderImageOnCanvas("doesnt matter", image);
-		memeUploadOverlayDiv.classList.remove("flex");
-		memeUploadOverlayDiv.classList.add("hidden");
-		g.uploadFormOpen = false;
+		image.onload = function () {
+			renderImageOnCanvas("doesnt matter", image);
+			memeUploadOverlayDiv.classList.remove("flex");
+			memeUploadOverlayDiv.classList.add("hidden");
+			g.uploadFormOpen = false;
+		}
 	};
 }
 

@@ -9,6 +9,15 @@ export function renderImageOnCanvas(url = undefined, imageElem = undefined) {
 		// TODO: This is a little slow because the memegen server scales the image to our custom provided width and height and that requires time
 		// Probably get the image as it is and scaling it on the browser is better
 		url = url + `?width=${g.canvas.width}&height=${g.canvas.height}`;
+		const loadingText = new FabricText("Loading...", {
+			fontSize: 24,
+			fontFamily: "sans-serif",
+			fill: "black",
+			hasControls: false,
+			selectable: false,
+		});
+		g.canvas.add(loadingText);
+		g.canvas.centerObject(loadingText);
 		FabricImage.fromURL(url, {
 			left: 0,
 			top: 0,
@@ -19,17 +28,28 @@ export function renderImageOnCanvas(url = undefined, imageElem = undefined) {
 			crossOrigin: "anonymous",
 		})
 			.then((image) => {
+				g.canvas.clear();
 				g.canvas.add(image);
 			})
 			.catch(error => {
 				console.error("Cannot generate FabricImage from URl", error);
 			})
 	} else {
+		const loadingText = new FabricText("Loading...", {
+			fontSize: 24,
+			fontFamily: "sans-serif",
+			fill: "black",
+			hasControls: false,
+			selectable: false,
+		});
+		g.canvas.add(loadingText);
+		g.canvas.centerObject(loadingText);
 		const image = new FabricImage(imageElem, {
 			left: 0,
 			top: 0,
 			crossOrigin: "anonymous",
 		});
+		g.canvas.remove(loadingText);
 		g.canvas.add(image);
 	}
 }

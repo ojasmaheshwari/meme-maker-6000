@@ -1,0 +1,16 @@
+export const memeSearchBar = document.querySelector('#meme-search');
+export const memeSearchSubmit = document.querySelector('#meme-search-submit');
+export const memeContainer = document.querySelector('.meme-container');
+export const memeCanvasElem = document.querySelector('#meme-canvas');
+export const addLabelButton = document.querySelector('#add-label-button');
+export const downloadButton = document.querySelector('#download-button');
+export const colorPickerElem = document.querySelector('#color-picker');
+export const boxColorPickerElem = document.querySelector('#box-color-picker');
+export const addRectangleButton = document.querySelector('#add-rectangle-button');
+export const copyMemeButton = document.querySelector('#copy-meme-button');
+export const fontSizeSliderElem = document.querySelector('#font-size-slider');
+export const memeUploadButton = document.querySelector('#upload-meme-button');
+export const memeUploadOverlayDiv = document.querySelector('.upload-overlay');
+export const memeUploadOverlayCloseButton = document.querySelector('#close-upload-overlay');
+export const uploadDragSectionDiv = document.querySelector('.drag-section');
+export const memeImageUpload = document.querySelector('#meme-image-upload');

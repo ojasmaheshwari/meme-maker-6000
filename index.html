@@ -14,8 +14,8 @@
 	</header>
 	<main class="h-[calc(100svh-(var(--spacing)*24))] bg-slate-700 flex justify-center items-center">
 		<div
-			class="main-container md:w-[70%] lg:h-[70%] bg-slate-800 flex flex-col lg:flex-row justify-center items-center">
-			<div class="meme-container h-[50%] w-[95%] md:h-full lg:h-full bg-slate-400 m-2 lg:m-0">
+			class="main-container md:w-[70%] lg:h-[70%] bg-slate-800 flex flex-col lg:flex-row justify-center items-center rounded-sm">
+			<div class="meme-container h-[50%] w-[95%] md:h-full lg:h-full bg-slate-400 m-2 lg:m-0 rounded-sm">
 				<canvas id="meme-canvas" class="w-full h-full">
 				</canvas>
 			</div>
@@ -50,14 +50,30 @@
 						</div>
 					</div>
 					<div class="flex flex-row">
-						<button class="bg-green-500 p-2 rounded-sm m-2 cursor-pointer" id="download-button">
+						<button
+							class="bg-green-600 p-2 rounded-sm m-2 cursor-pointer hover:bg-green-500 transition-colors text-white"
+							id="download-button">
+							<i class="fa-solid fa-download m-1"></i>
 							Download
 						</button>
-						<button class="bg-green-500 p-2 rounded-sm m-2 cursor-pointer" id="copy-meme-button">
+						<button
+							class="bg-green-600 p-2 rounded-sm m-2 cursor-pointer hover:bg-green-500 transition-colors text-white"
+							id="copy-meme-button">
+							<i class="fa-solid fa-copy m-1"></i>
 							Copy
 						</button>
-						<button class="bg-blue-500 p-2 rounded-sm m-2 cursor-pointer" id="upload-meme-button">
+						<button class="bg-blue-600 p-2 rounded-sm m-2 cursor-pointer hover:bg-blue-500 transition-colors text-white"
+							id="upload-meme-button">
+							<i class="fa-solid fa-upload m-1"></i>
 							Upload Meme
+						</button>
+					</div>
+					<div class="flex-row">
+						<button
+							class="bg-yellow-600 p-2 rounded-sm m-2 cursor-pointer hover:bg-yellow-500 transition-colors text-white"
+							id="insert-emoji">
+							<i class="fa-solid fa-face-smile m-1"></i>
+							Insert emoji
 						</button>
 					</div>
 				</div>
@@ -66,7 +82,7 @@
 		<div
 			class="upload-overlay w-[90%] h-[70%] lg:w-[50%] lg:h-[50%] bg-slate-200 absolute border-2 rounded-sm hidden flex-col">
 			<button class="h-2 absolute right-1 cursor-pointer" id="close-upload-overlay">
-				Close
+				<i class="fa-solid fa-xmark"></i>
 			</button>
 			<div class="drag-section bg-slate-600 w-full grow-1 flex items-center justify-center text-4xl">
 				Drag file here or paste
@@ -75,10 +91,22 @@
 				<input type="file" name="meme-image-upload" id="meme-image-upload" class="bg-white rounded-sm w-[90%]">
 			</div>
 		</div>
+		<div
+			class="hidden emoji-overlay absolute flex-col bg-slate-300 border-solid border-black border-2 h-64 p-2 rounded-sm w-[90%] lg:w-[30%]">
+			<button class="h-2 absolute right-1 top-0 cursor-pointer" id="close-emoji-overlay">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
+			<input type="search" name="search-emoji" id="search-emoji" class="w-[100%] h-6 bg-white rounded-sm mt-4 p-1"
+				placeholder="Search emoji">
+			<div class="emoji-space flex flex-wrap">
+
+			</div>
+		</div>
 	</main>
 	<footer class="bg-slate-600 w-full h-8 text-white text-xl flex items-center justify-center px-3">
 		Made by <a href="https://github.com/ojasmaheshwari" target="_blank" class="mx-1 underline">Ojas Maheshwari</a>
 	</footer>
+	<script src="https://kit.fontawesome.com/52c243a744.js" crossorigin="anonymous"></script>
 	<script defer type="module" src="/src/main.js"></script>
 </body>
 

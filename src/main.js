@@ -1,12 +1,13 @@
 import Fuse from "fuse.js";
 import {Canvas} from "fabric";
-import {memeSearchBar, memeSearchSubmit, memeContainer, memeCanvasElem, addLabelButton, downloadButton, colorPickerElem, boxColorPickerElem, addRectangleButton, copyMemeButton, fontSizeSliderElem, memeUploadOverlayDiv, memeUploadButton, memeUploadOverlayCloseButton, uploadDragSectionDiv, memeImageUpload, editLabelButton} from "./DOMElements";
+import {memeSearchBar, memeSearchSubmit, memeContainer, memeCanvasElem, addLabelButton, downloadButton, colorPickerElem, boxColorPickerElem, addRectangleButton, copyMemeButton, fontSizeSliderElem, memeUploadOverlayDiv, memeUploadButton, memeUploadOverlayCloseButton, uploadDragSectionDiv, memeImageUpload, editLabelButton, insertEmojiButton, closeEmojiOverlayButton, searchEmojiElem, emojiSpace, emojiOverlay} from "./DOMElements";
 import g, {textSettings} from "./Globals";
 import {loadMemes} from "./MemesDatasetLoader";
 import MemeQueryManager from "./MemeQueryManager";
-import {addLabelWithControls, addRectangleWithControls} from "./MemesRenderer";
-import {copyMemeToClipboard} from "./Miscellaneous";
+import {addLabelWithControls, addRectangleWithControls, renderImageOnCanvas} from "./MemesRenderer";
+import {closeEmojiOverlay, copyMemeToClipboard, openEmojiOverlay} from "./Miscellaneous";
 import ManageUploads from "./UploadManager";
+import {loadEmojis} from "./EmojiDatasetLoader";
 
 async function main() {
 	g.canvas = new Canvas(memeCanvasElem, {
@@ -17,6 +18,8 @@ async function main() {
 	});
 	g.memesDataset = await loadMemes();
 	g.searchMemeFuse = new Fuse(g.memesDataset, g.searchMemeFuseOptions);
+	g.emojisDataset = await loadEmojis();
+	g.searchEmojiFuse = new Fuse(g.emojisDataset, g.searchEmojiFuseOptions)
 
 	memeSearchSubmit.addEventListener("click", (e) => {
 		e.preventDefault();
@@ -81,6 +84,40 @@ async function main() {
 	editLabelButton.addEventListener("click", () => {
 		g.canvas.getActiveObject().enterEditing();
 	});
+
+	insertEmojiButton.addEventListener("click", () => {
+		openEmojiOverlay();
+	});
+
+	closeEmojiOverlayButton.addEventListener("click", () => {
+		closeEmojiOverlay();
+	});
+
+	searchEmojiElem.addEventListener("input", () => {
+		const results = g.searchEmojiFuse.search(searchEmojiElem.value);
+		const endIndex = results.length <= 40 ? results.length : 40;
+
+		emojiSpace.innerHTML = "";
+		for (let i = 0; i < endIndex; i++) {
+			const image = document.createElement("img");
+			image.src = results[i].item.link;
+			image.style.width = "25px";
+			image.style.height = "25px";
+			image.classList.add("cursor-pointer");
+			image.classList.add("m-1");
+			image.dataset.link = image.src;
+			emojiSpace.appendChild(image);
+		}
+	});
+
+	emojiSpace.addEventListener("click", (e) => {
+		const emoji = e.target;
+		const link = emoji.dataset.link;
+
+		if (link) {
+			renderImageOnCanvas(link);
+		}
+	})
 
 	ManageUploads();
 }

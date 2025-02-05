@@ -28,8 +28,8 @@ export function renderImageOnCanvas(url = undefined, imageElem = undefined) {
 			crossOrigin: "anonymous",
 		})
 			.then((image) => {
-				g.canvas.clear();
-				g.canvas.add(image);
+				g.canvas.remove(loadingText);
+				createWithDeleteControl(image);
 			})
 			.catch(error => {
 				console.error("Cannot generate FabricImage from URl", error);
@@ -50,7 +50,7 @@ export function renderImageOnCanvas(url = undefined, imageElem = undefined) {
 			crossOrigin: "anonymous",
 		});
 		g.canvas.remove(loadingText);
-		g.canvas.add(image);
+		createWithDeleteControl(image);
 	}
 }
 
@@ -86,7 +86,7 @@ export function addLabelWithControls() {
 		cursorStyle: 'pointer',
 		mouseUpHandler: deleteObject,
 		render: renderIcon,
-		cornerSize: 24,
+		cornerSize: 16,
 	});
 
 	g.canvas.add(textbox);
@@ -123,8 +123,40 @@ export function addRectangleWithControls() {
 		cursorStyle: 'pointer',
 		mouseUpHandler: deleteObject,
 		render: renderIcon,
-		cornerSize: 24,
+		cornerSize: 16,
 	});
 
 	g.canvas.add(rect);
+}
+
+export function createWithDeleteControl(elem) {
+	var deleteImg = document.createElement('img');
+	deleteImg.src = deleteIcon;
+
+	function deleteObject(_eventData, transform) {
+		const _canvas = transform.target.canvas;
+		_canvas.remove(transform.target);
+		_canvas.requestRenderAll();
+	}
+
+	function renderIcon(ctx, left, top, _styleOverride, fabricObject) {
+		const size = this.cornerSize;
+		ctx.save();
+		ctx.translate(left, top);
+		ctx.rotate(util.degreesToRadians(fabricObject.angle));
+		ctx.drawImage(deleteImg, -size / 2, -size / 2, size, size);
+		ctx.restore();
+	}
+
+	elem.controls.deleteControl = new Control({
+		x: 0.5,
+		y: -0.5,
+		offsetY: 16,
+		cursorStyle: 'pointer',
+		mouseUpHandler: deleteObject,
+		render: renderIcon,
+		cornerSize: 16,
+	});
+
+	g.canvas.add(elem);
 }

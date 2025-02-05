@@ -13,6 +13,7 @@ https://meme-maker-6000.netlify.app/
 - memegen api for getting meme templates.
 - Fuse.js for fuzzy finding.
 - Fabric.js for image editing on canvas.
+- Github emojis REST api for emojis
 
 # Approximate time taken
 - 2.5 days
